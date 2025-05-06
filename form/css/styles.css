@@ -1,0 +1,220 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f0f8f0;
+    margin: 0;
+    padding: 0;
+    color: #1a2e1a;
+    background-image: radial-gradient(circle at 10% 20%, rgba(200, 250, 200, 0.1) 0%, rgba(150, 230, 150, 0.1) 90%);
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(46, 125, 50, 0.15);
+    border: 1px solid rgba(46, 125, 50, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #2ecc71, #27ae60, #2ecc71);
+    animation: gradientBG 3s ease infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+h1 {
+    text-align: center;
+    color: #27ae60;
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(39, 174, 96, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 95%;
+    padding: 14px 16px;
+    border: 1px solid #c8e6c9;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s;
+    background-color: #f8fef8;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #27ae60;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2);
+    background-color: #fff;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+}
+
+.checkbox-group input {
+    margin-right: 10px;
+    accent-color: #27ae60;
+}
+
+.checkbox-group label {
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+.terms-link {
+    color: #27ae60;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.terms-link:hover {
+    text-decoration: underline;
+    color: #219653;
+}
+
+button {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 16px 20px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(39, 174, 96, 0.2);
+}
+
+button:hover {
+    background-color: #219653;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(39, 174, 96, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 8px;
+    display: none;
+    padding-left: 5px;
+}
+
+.password-strength {
+    height: 6px;
+    background-color: #e0f0e0;
+    margin-top: 8px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: all 0.4s ease;
+}
+
+.notification {
+    padding: 16px;
+    margin-bottom: 24px;
+    border-radius: 6px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.notification.error {
+    background-color: #e74c3c;
+}
+
+.notification.success {
+    background-color: #27ae60;
+}
+
+.notification.warning {
+    background-color: #f39c12;
+}
+
+.notification .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.notification .close-btn:hover {
+    opacity: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.form-group:hover label {
+    color: #27ae60;
+}
+
+input:valid:not(:placeholder-shown) {
+    border-color: #a5d6a7;
+}
+
+input:invalid:not(:placeholder-shown) {
+    border-color: #ef9a9a;
+}
+
+input:invalid:not(:placeholder-shown) + .error {
+    display: block;
+}
+
+
+
+button:hover {
+    animation: float 1.5s ease-in-out infinite;
+}

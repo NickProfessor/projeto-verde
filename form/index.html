@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Nossa Plataforma</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Crie sua conta</h1>
+        
+        <div id="notification" class="notification hidden"></div>
+        
+        <form id="registrationForm" novalidate>
+            <div class="form-group">
+                <label for="name">Nome completo</label>
+                <input type="text" id="name" name="name" required minlength="3">
+                <div class="error" id="name-error">Por favor, insira seu nome completo (mínimo 3 caracteres)</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error" id="email-error">Por favor, insira um e-mail válido</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required minlength="8">
+                <div class="password-strength">
+                    <div class="strength-bar" id="strength-bar"></div>
+                </div>
+                <div class="error" id="password-error">A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm-password">Confirme sua senha</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+                <div class="error" id="confirm-password-error">As senhas não coincidem</div>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">Eu li e aceito os <a href="#" class="terms-link">Termos de Uso</a></label>
+                <div class="error" id="terms-error">Você deve aceitar os termos para continuar</div>
+            </div>
+            
+            <button type="submit" id="submit-btn">Criar conta</button>
+        </form>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
