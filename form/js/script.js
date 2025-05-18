@@ -32,10 +32,12 @@ document.addEventListener('DOMContentLoaded', function() {
         termsText.innerHTML = termsCheckbox.checked 
             ? 'Li e aceito os <a href="#" id="terms-link">Termos de Serviço</a> ✔'
             : 'Li e aceito os <a href="#" id="terms-link">Termos de Serviço</a>';
+
     }
     
     function calculatePasswordStrength(password) {
         let strength = 0;
+
         if (password.length >= 8) strength += 1;
         if (password.length >= 12) strength += 1;
         if (/[A-Z]/.test(password)) strength += 1;
@@ -83,4 +85,5 @@ document.addEventListener('DOMContentLoaded', function() {
             termsModal.classList.add('hidden');
         }
     });
+
 });
