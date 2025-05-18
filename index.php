@@ -1,0 +1,1 @@
+<a href="./src/pages/reset.php">Iniciar Questionário</a>
