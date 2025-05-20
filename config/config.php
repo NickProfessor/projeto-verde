@@ -3,5 +3,5 @@
 // Configurações do banco de dados
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
-define('DB_PASS', 'root');
+define('DB_PASS', '&tec77@info!');
 define('DB_NAME', 'db_projeto_verde');

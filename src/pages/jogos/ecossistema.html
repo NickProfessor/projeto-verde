@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ecosistema RPG - Projeto Verde+</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/jogos.css">
+  <style>
+
+    .hero {
+      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1502082553048-f009c37129b9 ');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px #000000;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      max-width: 800px;
+      margin: 0 auto;
+      text-shadow: 1px 1px 2px #000000;
+    }
+
+   
+    .rpg-game {
+      background-color: #f1f8e9;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .rpg-character {
+      width: 100px;
+      height: 100px;
+      background: url('https://cdn-icons-png.flaticon.com/512/1163/1163661.png ') no-repeat center / contain;
+      margin: 0 auto 20px;
+    }
+
+    .rpg-scenario {
+      background-color: #fffde7;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .rpg-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .rpg-option {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .rpg-option:hover {
+      background-color: #388e3c;
+      transform: scale(1.05);
+    }
+
+    .rpg-stats {
+      font-weight: bold;
+      background-color: #e8f5e9;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    #rpg-scenario-text {
+      font-style: italic;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="../../../index.html" class="logo">PROJETO VERDE+</a>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <div class="hero">
+      <h1>Ecosistema RPG</h1>
+      <p>Junte-se a uma aventura para restaurar o equilíbrio ecológico de uma floresta ameaçada.</p>
+    </div>
+
+    <div id="rpg-game-container" class="game-section"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+        <div class="footer-links mb-2">
+            <a href="#">TERMOS DE USO</a>
+        </div>
+        <div>TODOS OS DIREITOS RESERVADOS</div>
+        <div>© 2025 PROJETO VERDE+</div>
+    </div>
+</footer>  
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const gameContainer = document.getElementById('rpg-game-container');
+
+      if (gameContainer) {
+        gameContainer.innerHTML = `
+          <div class="rpg-game">
+            <h3>Aventura no Ecossistema</h3>
+            <p>Você é um guardião da floresta. Escolha suas ações sabiamente para manter o equilíbrio ecológico.</p>
+            
+            <div class="rpg-character"></div>
+            
+            <div class="rpg-scenario">
+              <p id="rpg-scenario-text">Você está na entrada da floresta. O que você faz?</p>
+              
+              <div class="rpg-options">
+                <button class="rpg-option" data-action="explore">Explorar a floresta</button>
+                <button class="rpg-option" data-action="plant">Plantar uma árvore</button>
+                <button class="rpg-option" data-action="clean">Limpar o lixo</button>
+              </div>
+            </div>
+            
+            <div class="rpg-stats">
+              <p>Saúde do Ecossistema: <span id="ecosystem-health">100</span>%</p>
+              <p>Pontuação: <span id="rpg-score">0</span></p>
+            </div>
+          </div>
+        `;
+
+        let ecosystemHealth = 100;
+        let score = 0;
+
+        document.querySelectorAll('.rpg-option').forEach(option => {
+          option.addEventListener('click', function() {
+            const action = this.getAttribute('data-action');
+
+            switch(action) {
+              case 'explore':
+                ecosystemHealth = Math.max(0, ecosystemHealth - 5);
+                score += 10;
+                document.getElementById('rpg-scenario-text').textContent = 
+                  "🌿 Você encontrou uma área desmatada. Sua exploração revelou um problema ambiental.";
+                break;
+              case 'plant':
+                ecosystemHealth = Math.min(100, ecosystemHealth + 15);
+                score += 20;
+                document.getElementById('rpg-scenario-text').textContent = 
+                  "🌳 Você plantou uma nova árvore! O ecossistema começa a se recuperar.";
+                break;
+              case 'clean':
+                ecosystemHealth = Math.min(100, ecosystemHealth + 10);
+                score += 15;
+                document.getElementById('rpg-scenario-text').textContent = 
+                  "🗑️ Você coletou lixo da floresta. Os animais agradecem!";
+                break;
+            }
+
+            document.getElementById('ecosystem-health').textContent = ecosystemHealth;
+            document.getElementById('rpg-score').textContent = score;
+
+            if (ecosystemHealth <= 0) {
+              document.getElementById('rpg-scenario-text').textContent = 
+                "☠️ O ecossistema entrou em colapso! Game Over. Recarregue a página para tentar novamente.";
+              document.querySelectorAll('.rpg-option').forEach(btn => btn.disabled = true);
+            } else if (score >= 100 && ecosystemHealth > 0) {
+              document.getElementById('rpg-scenario-text').textContent = 
+                "🏆 Parabéns! Você salvou a floresta e alcançou uma pontuação heroica!";
+              document.querySelectorAll('.rpg-option').forEach(btn => btn.disabled = true);
+            }
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

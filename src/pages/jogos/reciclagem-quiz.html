@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Desafio da Reciclagem - Projeto Verde+</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/jogos.css">
+  <style>
+
+
+    .hero {
+      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1502082553048-f009c37129b9 ');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+
+    
+    .quiz-game {
+      background-color: #fffde7;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .quiz-question {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #1b5e20;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quiz-option {
+      background-color: #c8e6c9;
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .quiz-option:hover {
+      background-color: #a5d6a7;
+      transform: scale(1.02);
+    }
+
+    .score-display {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+
+    .quiz-result {
+      text-align: center;
+    }
+
+    .quiz-result button {
+      background-color: #2e7d32;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    .quiz-result button:hover {
+      background-color: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="../../../index.html" class="logo">PROJETO VERDE+</a>
+    </div>
+  </header>
+
+
+
+  <div class="main-content">
+    <div class="hero">
+      <h1>Desafio da Reciclagem</h1>
+      <p>Teste seus conhecimentos sobre coleta seletiva e gestão de resíduos.</p>
+    </div>
+
+    <div id="quiz-game-container" class="game-section"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+        <div class="footer-links mb-2">
+            <a href="#">TERMOS DE USO</a>
+        </div>
+        <div>TODOS OS DIREITOS RESERVADOS</div>
+        <div>© 2025 PROJETO VERDE+</div>
+    </div>
+  </footer>  
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const quizContainer = document.getElementById('quiz-game-container');
+
+      if (quizContainer) {
+        const questions = [
+  {
+    question: "Qual desses materiais NÃO pode ser reciclado?",
+    options: ["Garrafa PET", "Papelão", "Copo de vidro", "Fralda descartável"],
+    answer: 3
+  },
+  {
+    question: "Quanto tempo leva para uma garrafa plástica se decompor na natureza?",
+    options: ["10 anos", "50 anos", "100 anos", "450 anos"],
+    answer: 3
+  },
+  {
+    question: "Qual é a cor do recipiente para coleta de papel?",
+    options: ["Azul", "Verde", "Amarelo", "Vermelho"],
+    answer: 0
+  },
+  {
+    question: "O que significa a sigla 'PET' nas garrafas plásticas?",
+    options: ["Polietileno Tereftalato", "Produto Ecológico Total", "Plástico Estrutural Transparente", "Polímero Esterilizado Termicamente"],
+    answer: 0
+  },
+  {
+    question: "Qual destes materiais leva mais tempo para se decompor?",
+    options: ["Lata de alumínio", "Borracha de pneu", "Papel higiênico", "Casca de fruta"],
+    answer: 1
+  },
+  {
+    question: "Qual material deve ir no lixo eletrônico?",
+    options: ["Bateria", "Garrafa de água", "Saco plástico", "Caixa de papelão"],
+    answer: 0
+  },
+  {
+    question: "O que é 'lixo orgânico'?",
+    options: ["Restos de comida", "Papel rasgado", "Embalagens plásticas", "Metais velhos"],
+    answer: 0
+  },
+  {
+    question: "Qual é o destino correto das pilhas usadas?",
+    options: ["Lixeira comum", "Coleta especializada", "Lavagem e reutilização", "Queima em fogueiras"],
+    answer: 1
+  },
+  {
+    question: "O que é 'coleta seletiva'?",
+    options: ["Jogar tudo no mesmo saco", "Separar resíduos por tipo", "Enterrar o lixo", "Reaproveitar apenas plásticos"],
+    answer: 1
+  },
+  {
+    question: "Qual dos seguintes materiais pode ser reaproveitado como adubo?",
+    options: ["Vidro", "Metal", "Casca de banana", "Plástico"],
+    answer: 2
+  },
+  {
+    question: "O que é compostagem?",
+    options: ["Queimar lixo", "Transformar orgânicos em adubo", "Reciclar plástico", "Lavar embalagens"],
+    answer: 1
+  },
+  {
+    question: "Qual item NÃO faz parte da economia circular?",
+    options: ["Reutilizar", "Reduzir", "Descartar sem reaproveitar", "Reciclar"],
+    answer: 2
+  },
+  {
+    question: "Quantos litros de água são poupados ao reciclar 1kg de papel?",
+    options: ["10 litros", "50 litros", "100 litros", "300 litros"],
+    answer: 3
+  },
+  {
+    question: "Como podemos reduzir o lixo plástico no dia a dia?",
+    options: ["Usar canudos de plástico", "Levar sacolas reutilizáveis às compras", "Comprar produtos embalados", "Jogar embalagens no chão"],
+    answer: 1
+  },
+  {
+    question: "O que fazer antes de jogar um objeto no lixo?",
+    options: ["Verificar se pode ser reutilizado ou reciclado", "Jogar direto", "Esconder em outro lugar", "Guardar para sempre"],
+    answer: 0
+  }
+];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+          if (currentQuestion >= questions.length) {
+            quizContainer.innerHTML = `
+              <div class="quiz-result">
+                <h3>Quiz Concluído!</h3>
+                <p>Sua pontuação final: ${score} de ${questions.length}</p>
+                <button id="restart-quiz">Reiniciar Quiz</button>
+              </div>
+            `;
+
+            document.getElementById('restart-quiz').addEventListener('click', function () {
+              currentQuestion = 0;
+              score = 0;
+              loadQuestion();
+            });
+            return;
+          }
+
+          const q = questions[currentQuestion];
+
+          quizContainer.innerHTML = `
+            <div class="quiz-question">${q.question}</div>
+            <div class="quiz-options">
+              ${q.options.map((option, index) => `
+                <div class="quiz-option" data-answer="${index}">${option}</div>
+              `).join('')}
+            </div>
+            <div class="score-display">Pontuação: ${score}</div>
+          `;
+
+          document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function () {
+              const selectedAnswer = parseInt(this.getAttribute('data-answer'));
+
+              if (selectedAnswer === q.answer) {
+                score++;
+                this.style.backgroundColor = '#a5d6a7';
+              } else {
+                this.style.backgroundColor = '#ef9a9a';
+              }
+
+              setTimeout(() => {
+                currentQuestion++;
+                loadQuestion();
+              }, 1000);
+            });
+          });
+        }
+
+        loadQuestion();
+      }
+    });
+  </script>
+</body>
+</html>

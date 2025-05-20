@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Missão Água - Projeto Verde+</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/jogos.css">
+  <style>
+      .hero {
+      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1469474968028-56623f02e42e ');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+
+    .water-game {
+      background-color: #bbdefb;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .water-stats {
+      margin: 20px 0;
+      font-weight: bold;
+    }
+
+    .water-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .water-action {
+      background-color: #2196f3;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .water-action:hover {
+      background-color: #1976d2;
+    }
+
+    .water-events {
+      margin-top: 20px;
+      font-style: italic;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="../../../index.html" class="logo">PROJETO VERDE+</a>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <div class="hero">
+      <h1>Missão Água</h1>
+      <p>Aventure-se para resolver problemas de poluição e escassez de água.</p>
+    </div>
+
+    <div id="water-game-container" class="game-section"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+        <div class="footer-links mb-2">
+            <a href="#">TERMOS DE USO</a>
+        </div>
+        <div>TODOS OS DIREITOS RESERVADOS</div>
+        <div>© 2025 PROJETO VERDE+</div>
+    </div>
+  </footer>  
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const gameContainer = document.getElementById('water-game-container');
+
+      if (gameContainer) {
+        gameContainer.innerHTML = `
+          <div class="water-game">
+            <h3>Missão Água</h3>
+            <p>Ajude a resolver os problemas de poluição e escassez de água em uma cidade virtual.</p>
+            
+            <div class="water-stats">
+              <p>Nível de Poluição: <span id="pollution-level">50</span>%</p>
+              <p>Reservas de Água: <span id="water-reserves">50</span>%</p>
+              <p>População Saudável: <span id="healthy-population">50</span>%</p>
+            </div>
+            
+            <div class="water-actions">
+              <h4>Ações Disponíveis:</h4>
+              <button class="water-action" data-action="clean">Limpar rio poluído (-10% poluição, -5% água)</button>
+              <button class="water-action" data-action="educate">Educar população (-5% poluição, +10% saúde)</button>
+              <button class="water-action" data-action="collect">Coletar água da chuva (+15% água)</button>
+              <button class="water-action" data-action="reuse">Sistema de reúso (+10% água, -5% poluição)</button>
+            </div>
+            
+            <div class="water-events">
+              <p id="event-message">Bem-vindo ao jogo! Escolha sua primeira ação.</p>
+            </div>
+          </div>
+        `;
+
+        let pollution = 50;
+        let water = 50;
+        let health = 50;
+        let turn = 1;
+
+        function updateStats() {
+          document.getElementById('pollution-level').textContent = pollution;
+          document.getElementById('water-reserves').textContent = water;
+          document.getElementById('healthy-population').textContent = health;
+
+          if (pollution >= 100 || water <= 0 || health <= 0) {
+            document.getElementById('event-message').textContent =
+              "Game Over! A cidade não conseguiu lidar com os problemas hídricos. Recarregue para tentar novamente.";
+            document.querySelectorAll('.water-action').forEach(btn => btn.disabled = true);
+          } else if (pollution <= 10 && water >= 90 && health >= 90) {
+            document.getElementById('event-message').textContent =
+              "Parabéns! Você resolveu os problemas hídricos da cidade!";
+            document.querySelectorAll('.water-action').forEach(btn => btn.disabled = true);
+          }
+        }
+
+        function randomEvent() {
+          const events = [
+            { msg: "Choveu bastante! +10% água", effect: () => { water = Math.min(100, water + 10); } },
+            { msg: "Indústria despejou resíduos! +15% poluição", effect: () => { pollution = Math.min(100, pollution + 15); } },
+            { msg: "População está economizando água! +5% água", effect: () => { water = Math.min(100, water + 5); } },
+            { msg: "Vazamento na rede! -10% água", effect: () => { water = Math.max(0, water - 10); } }
+          ];
+
+          if (Math.random() > 0.6) {
+            const event = events[Math.floor(Math.random() * events.length)];
+            event.effect();
+            document.getElementById('event-message').textContent = event.msg;
+          }
+        }
+
+        document.querySelectorAll('.water-action').forEach(button => {
+          button.addEventListener('click', function () {
+            const action = this.getAttribute('data-action');
+
+            switch (action) {
+              case 'clean':
+                pollution = Math.max(0, pollution - 10);
+                water = Math.max(0, water - 5);
+                document.getElementById('event-message').textContent =
+                  "Você limpou parte do rio poluído! A água está mais limpa, mas o processo consumiu recursos hídricos.";
+                break;
+              case 'educate':
+                pollution = Math.max(0, pollution - 5);
+                health = Math.min(100, health + 10);
+                document.getElementById('event-message').textContent =
+                  "Campanha educativa realizada! A população está mais consciente e saudável.";
+                break;
+              case 'collect':
+                water = Math.min(100, water + 15);
+                document.getElementById('event-message').textContent =
+                  "Sistema de coleta de água da chuva instalado! Reservas aumentaram.";
+                break;
+              case 'reuse':
+                water = Math.min(100, water + 10);
+                pollution = Math.max(0, pollution - 5);
+                document.getElementById('event-message').textContent =
+                  "Sistema de reúso de água implementado! Menos poluição e mais água disponível.";
+                break;
+            }
+
+            turn++;
+            if (turn % 2 === 0) {
+              pollution = Math.min(100, pollution + 5);
+              water = Math.max(0, water - 5);
+            }
+
+            randomEvent();
+            updateStats();
+          });
+        });
+
+        updateStats();
+      }
+    });
+  </script>
+</body>
+</html>

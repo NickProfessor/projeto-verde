@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Desafio Climático - Projeto Verde+</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/jogos.css">
+  <style>
+      .hero {
+      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1502082553048-f009c37129b9 ');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px #000000;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      max-width: 800px;
+      margin: 0 auto;
+      text-shadow: 1px 1px 2px #000000;
+    }
+
+    footer {
+      background-color: #2e7d32;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+      border-top: 5px solid #1b5e20;
+    }
+
+    .footer-links {
+      margin-top: 10px;
+    }
+
+    .footer-links a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    
+    .climate-game {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #fffde7;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .climate-indicators {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .indicator {
+      text-align: center;
+      width: 30%;
+      min-width: 120px;
+    }
+
+    .thermometer,
+    .water-level,
+    .gas-level {
+      width: 30px;
+      height: 150px;
+      margin: 10px auto;
+      background-color: #f5f5f5;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    .mercury,
+    .water,
+    .gas {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(to top, #ff5252, #ff1744);
+      transition: height 0.5s ease-in-out;
+    }
+
+    .water {
+      background: linear-gradient(to top, #4fc3f7, #0288d1);
+    }
+
+    .gas {
+      background: linear-gradient(to top, #9ccc65, #689f38);
+    }
+
+    .indicator-value {
+      font-weight: bold;
+      margin-top: 5px;
+      font-size: 1rem;
+    }
+
+    .decision-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .decision-card {
+      background-color: #e8f5e9;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .decision-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    .decision-card h5 {
+      margin-top: 0;
+      color: #1b5e20;
+    }
+
+    .decision-cost {
+      font-weight: bold;
+      margin: 10px 0;
+      color: #2e7d32;
+    }
+
+    .decision-button {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    .decision-button:hover {
+      background-color: #1b5e20;
+    }
+
+    #climate-message {
+      margin-top: 20px;
+      font-style: italic;
+      color: #333;
+    }
+
+    .game-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+
+    .game-stats span {
+      font-size: 0.95rem;
+    }
+
+    
+    .tabs {
+      display: flex;
+      justify-content: center;
+      background-color: #388e3c;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 15px;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .tab.active {
+      background-color: #2e7d32;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 20px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="../../../index.html" class="logo">PROJETO VERDE+</a>
+    </div>
+  </header>
+
+  <div class="hero">
+        <h1>Desafio Climático</h1>
+        <p>Tome decisões que afetam o futuro do planeta e combata as mudanças climáticas.</p>
+      </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('desafio')">Desafio</div>
+    <div class="tab" onclick="showTab('floresta')">Floresta</div>
+    <div class="tab" onclick="showTab('pontos')">Pontuação</div>
+  </div>
+
+  <div class="main-content">
+
+    <div id="desafio" class="tab-content active">
+
+      <div id="climate-game-container" class="game-section"></div>
+    </div>
+
+    <!-- Aba: Floresta -->
+    <div id="floresta" class="tab-content">
+      <div class="hero">
+        <h1>Floresta Recuperada</h1>
+        <p>Veja como suas ações estão ajudando a floresta!</p>
+      </div>
+      <div style="text-align: center;">
+        <p>Árvores plantadas:</p>
+        <div id="forest-view" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;"></div>
+      </div>
+    </div>
+
+    <!-- Aba: Pontuação -->
+    <div id="pontos" class="tab-content">
+      <div class="hero">
+        <h1>Ganhe Pontos</h1>
+        <p>Complete missões diárias para ganhar recursos e salvar o planeta.</p>
+      </div>
+
+      <div style="text-align: center;">
+        <p>Recursos disponíveis: <strong id="resource-count">100</strong></p>
+        <div style="margin-top: 20px;">
+          <button onclick="addResources(20)" style="padding: 10px 20px; background-color: #2e7d32; color: white; border: none; border-radius: 5px; cursor: pointer;">Missão: Plante árvores (+20)</button>
+          <button onclick="addResources(15)" style="padding: 10px 20px; background-color: #2e7d32; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">Missão: Limpe lixo (+15)</button>
+          <button onclick="addResources(10)" style="padding: 10px 20px; background-color: #2e7d32; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">Missão: Explore (+10)</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+        <div class="footer-links mb-2">
+            <a href="#">TERMOS DE USO</a>
+        </div>
+        <div>TODOS OS DIREITOS RESERVADOS</div>
+        <div>© 2025 PROJETO VERDE+</div>
+    </div>
+  </footer>  
+
+  <script>
+    let resources = 100;
+
+    
+    function showTab(tabId) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      event.currentTarget.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+
+      if (tabId === 'floresta') drawForest();
+    }
+
+    
+    function addResources(amount) {
+      resources += amount;
+      updateStats();
+      drawForest();
+    }
+
+   
+    function updateStats() {
+      document.getElementById('resource-count').textContent = resources;
+
+      const container = document.getElementById('climate-game-container');
+      container.innerHTML = `
+        <div class="climate-game">
+          <h3>Desafio Climático</h3>
+          <p>Tome decisões inteligentes para reduzir os impactos das mudanças climáticas.</p>
+
+          <div class="climate-indicators">
+            <div class="indicator">
+              <div class="thermometer"><div id="temperature-bar" class="mercury" style="height: 50%;"></div></div>
+              <div id="temperature-value">+0.0°C</div>
+              <small>Temperatura Global</small>
+            </div>
+            <div class="indicator">
+              <div class="water-level"><div id="sea-level-bar" class="water" style="height: 0%;"></div></div>
+              <div id="sea-level-value">+0cm</div>
+              <small>Nível do Mar</small>
+            </div>
+            <div class="indicator">
+              <div class="gas-level"><div id="co2-level-bar" class="gas" style="height: 0%;"></div></div>
+              <div id="co2-value">350ppm</div>
+              <small>CO₂ na Atmosfera</small>
+            </div>
+          </div>
+
+          <div class="game-stats">
+            <span>Ano: <strong id="current-year">2025</strong></span>
+            <span>Recursos: <strong id="climate-resources">${resources}</strong></span>
+            <span>Impacto: <strong id="climate-impact">0</strong>%</span>
+          </div>
+
+          <div id="decision-cards" class="decision-cards"></div>
+
+          <div id="climate-message">Escolha sua primeira ação!</div>
+        </div>
+      `;
+
+      createDecisionCards();
+      setupActionButtons();
+      updateIndicators();
+    }
+
+   
+    let temperature = 0; // °C
+    let seaLevel = 0; // cm
+    let co2Level = 350; // ppm
+    let year = 2025;
+    let impact = 0;
+
+    const decisions = [
+      {
+        title: "Energia Renovável",
+        description: "Substituir usinas movidas a carvão por solares e eólicas.",
+        cost: 20,
+        effect: () => {
+          co2Level = Math.max(350, co2Level - 10);
+          return "Redução de emissões de CO₂!";
+        }
+      },
+      {
+        title: "Reflorestamento",
+        description: "Plantar árvores em áreas desmatadas.",
+        cost: 15,
+        effect: () => {
+          co2Level = Math.max(350, co2Level - 5);
+          return "Captura de carbono aumentada!";
+        }
+      },
+      {
+        title: "Transporte Sustentável",
+        description: "Promover ônibus elétricos e ciclovias.",
+        cost: 18,
+        effect: () => {
+          co2Level = Math.max(350, co2Level - 8);
+          return "Menos emissões no transporte urbano!";
+        }
+      },
+      {
+        title: "Lei de Emissões",
+        description: "Impor limites rígidos à poluição industrial.",
+        cost: 25,
+        effect: () => {
+          co2Level = Math.max(350, co2Level - 15);
+          return "Indústrias reduziram suas emissões!";
+        }
+      },
+      {
+        title: "Educação Ambiental",
+        description: "Campanhas sobre sustentabilidade nas escolas.",
+        cost: 10,
+        effect: () => {
+          impact += 2;
+          return "População mais consciente!";
+        }
+      },
+      {
+        title: "Proteção Costeira",
+        description: "Construir barreiras contra erosão marinha.",
+        cost: 20,
+        effect: () => {
+          seaLevel -= 2;
+          return "Impacto da elevação do mar diminuído!";
+        }
+      }
+    ];
+
+    
+    function createDecisionCards() {
+      const container = document.getElementById('decision-cards');
+      container.innerHTML = '';
+
+      decisions.forEach((decision, index) => {
+        const card = document.createElement('div');
+        card.className = 'decision-card';
+        card.innerHTML = `
+          <h5>${decision.title}</h5>
+          <p>${decision.description}</p>
+          <div class="decision-cost">Custo: ${decision.cost} pontos</div>
+          <button class="decision-button" data-index="${index}">Implementar</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    
+    function setupActionButtons() {
+      document.querySelectorAll('.decision-button').forEach(button => {
+        button.addEventListener('click', function () {
+          const index = parseInt(this.getAttribute('data-index'));
+          const decision = decisions[index];
+
+          if (resources >= decision.cost) {
+            resources -= decision.cost;
+            const result = decision.effect();
+            impact = Math.min(100, impact + (decision.cost / 2));
+            year += 2;
+
+            if (Math.random() > 0.7) {
+              temperature = Math.min(3, temperature + 0.3);
+              seaLevel = Math.min(50, seaLevel + 2);
+              co2Level = Math.min(500, co2Level + 5);
+            }
+
+            document.getElementById('climate-message').textContent =
+              `Ação implementada! ${result} Ano atual: ${year}`;
+
+            updateIndicators();
+
+            if (impact >= 80) {
+              document.getElementById('climate-message').textContent =
+                "🎉 Parabéns! Você estabilizou o clima global!";
+              document.getElementById('climate-message').style.color = '#2e7d32';
+            } else if (temperature >= 2.5 || seaLevel >= 40 || co2Level >= 480) {
+              document.getElementById('climate-message').textContent =
+                "⚠️ Crise climática! Os impactos são irreversíveis.";
+              document.getElementById('climate-message').style.color = '#c62828';
+            }
+          } else {
+            document.getElementById('climate-message').textContent =
+              "❌ Recursos insuficientes para esta ação!";
+          }
+        });
+      });
+    }
+
+    // Atualiza indicadores visuais
+    function updateIndicators() {
+      const tempPercentage = ((temperature + 1) / 4) * 100;
+      document.getElementById('temperature-bar').style.height = `${tempPercentage}%`;
+      document.getElementById('temperature-value').textContent = `${temperature >= 0 ? '+' : ''}${temperature.toFixed(1)}°C`;
+
+      const seaPercentage = (seaLevel / 50) * 100;
+      document.getElementById('sea-level-bar').style.height = `${seaPercentage}%`;
+      document.getElementById('sea-level-value').textContent = `+${seaLevel}cm`;
+
+      const co2Percentage = ((co2Level - 350) / 150) * 100;
+      document.getElementById('co2-level-bar').style.height = `${co2Percentage}%`;
+      document.getElementById('co2-value').textContent = `${co2Level}ppm`;
+
+      document.getElementById('current-year').textContent = year;
+      document.getElementById('climate-resources').textContent = resources;
+      document.getElementById('climate-impact').textContent = impact;
+    }
+
+    
+    function drawForest() {
+      const forest = document.getElementById('forest-view');
+      forest.innerHTML = '';
+      const treesToDraw = Math.floor(resources / 20);
+
+      for (let i = 0; i < treesToDraw; i++) {
+        const tree = document.createElement('div');
+        tree.style.width = '40px';
+        tree.style.height = '80px';
+        tree.style.position = 'relative';
+        tree.innerHTML = `
+          <div style="
+            position: absolute;
+            top: -40px;
+            left: -10px;
+            width: 60px;
+            height: 60px;
+            background: green;
+            border-radius: 50%;
+            z-index: -1;
+          "></div>
+          <div style="
+            width: 100%;
+            height: 100%;
+            background-color: brown;
+            position: relative;
+          "></div>
+        `;
+        tree.style.animation = 'growTree 1s forwards';
+        forest.appendChild(tree);
+      }
+    }
+
+    
+    updateStats();
+    drawForest();
+  </script>
+</body>
+</html>

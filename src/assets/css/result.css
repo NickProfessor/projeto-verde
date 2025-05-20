@@ -1,0 +1,190 @@
+/* Estilos gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f9f5;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+    color: #2e7d32;
+    margin-bottom: 15px;
+    font-size: 28px;
+    text-align: center;
+    font-weight: 600;
+}
+
+h3 {
+    color: #2e7d32;
+    margin: 30px 0 15px 0;
+    font-size: 22px;
+    border-bottom: 2px solid #e8f5e9;
+    padding-bottom: 8px;
+}
+
+p {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+}
+
+/* Estilos para o gráfico */
+canvas#graficoDesempenho {
+    margin: 30px 0;
+    background-color: #f9fff9;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos para as recomendações */
+ul, ol {
+    padding-left: 20px;
+    margin-bottom: 25px;
+}
+
+ul li, ol li {
+    margin-bottom: 12px;
+    padding-left: 5px;
+}
+
+ul li strong {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+ol {
+    counter-reset: item;
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+ol li {
+    background-color: #e8f5e9;
+    border-radius: 10px;
+    padding: 15px;
+    position: relative;
+    padding-left: 35px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+ol li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+ol li::before {
+    content: counter(item);
+    counter-increment: item;
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    background-color: #4CAF50;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Estilos para os botões */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 20px auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #388E3C;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.share-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#share-btn {
+    background-color: #2196F3;
+}
+
+#share-btn:hover {
+    background-color: #1976D2;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    h2 {
+        font-size: 24px;
+    }
+    
+    h3 {
+        font-size: 20px;
+    }
+    
+    p {
+        font-size: 16px;
+    }
+    
+    ol {
+        grid-template-columns: 1fr;
+    }
+    
+    canvas#graficoDesempenho {
+        height: 300px !important;
+    }
+}
+
+/* Estilos para impressão */
+@media print {
+    body {
+        background-color: white;
+        padding: 0;
+    }
+    
+    .container {
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    button {
+        display: none;
+    }
+}

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guardião da Biodiversidade - Projeto Verde+</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/jogos.css">
+  <style>
+    .hero {
+      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1502082553048-f009c37129b9 ');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+
+    .biodiversity-game {
+      background-color: #fffde7;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .ecosystem-display {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .species-list {
+      flex: 1;
+      min-width: 250px;
+      background-color: #f1f8e9;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .specie {
+      padding: 5px 0;
+    }
+
+    .specie.protected {
+      font-weight: bold;
+      color: #2e7d32;
+    }
+
+    .fundraising-actions {
+      flex: 1;
+      min-width: 250px;
+      background-color: #e8f5e9;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .fundraising-title {
+      font-weight: bold;
+      color: #1b5e20;
+      margin-bottom: 10px;
+    }
+
+    .fundraising-option {
+      background-color: #81c784;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 5px 0;
+      width: 100%;
+      text-align: left;
+    }
+
+    .fundraising-option:hover {
+      background-color: #4caf50;
+    }
+
+    .fundraising-cost {
+      font-size: 0.8em;
+      color: #e8f5e9;
+    }
+
+    .biodiversity-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .bio-action {
+      background-color: #8bc34a;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .bio-action:hover {
+      background-color: #689f38;
+    }
+
+    .biodiversity-stats {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #bio-message {
+      margin-top: 20px;
+      font-style: italic;
+      color: #333;
+    }
+
+    .progress-bar {
+      height: 20px;
+      background-color: #e0e0e0;
+      border-radius: 10px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: #4caf50;
+      width: 50%;
+      transition: width 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="../../../index.html" class="logo">PROJETO VERDE+</a>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <div class="hero">
+      <h1>Guardião da Biodiversidade</h1>
+      <p>Proteja espécies ameaçadas e arrecade fundos para conservação.</p>
+    </div>
+
+    <div id="biodiversity-game-container" class="game-section"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+        <div class="footer-links mb-2">
+            <a href="#">TERMOS DE USO</a>
+        </div>
+        <div>TODOS OS DIREITOS RESERVADOS</div>
+        <div>© 2025 PROJETO VERDE+</div>
+    </div>
+</footer>  
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const gameContainer = document.getElementById('biodiversity-game-container');
+
+      if (gameContainer) {
+        gameContainer.innerHTML = `
+          <div class="biodiversity-game">
+            <h3>Guardião da Biodiversidade</h3>
+            <p>Proteja espécies ameaçadas e arrecade fundos para conservação.</p>
+            
+            <div class="ecosystem-display">
+              <div class="species-list" id="species-list"></div>
+              <div class="fundraising-actions">
+                <div class="fundraising-title">Ações de Arrecadação:</div>
+                <button class="fundraising-option" data-action="lecture">
+                  Palestra Educativa <span class="fundraising-cost">(Custo: 20, Ganho: 40-60)</span>
+                </button>
+                <button class="fundraising-option" data-action="safari">
+                  Safari Ecológico <span class="fundraising-cost">(Custo: 100, Ganho: 150-250)</span>
+                </button>
+                <button class="fundraising-option" data-action="adoption">
+                  Programa de Apadrinhamento <span class="fundraising-cost">(Custo: 50, Ganho: 80/mês)</span>
+                </button>
+                <button class="fundraising-option" data-action="ecotourism">
+                  Pacote de Ecoturismo <span class="fundraising-cost">(Custo: 150, Ganho: 300-500)</span>
+                </button>
+                <button class="fundraising-option" data-action="donation">
+                  Campanha de Doações <span class="fundraising-cost">(Custo: 30, Ganho: 50-150)</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="biodiversity-actions">
+              <button class="bio-action" data-action="protect">Proteger Habitat (Custo: 50)</button>
+              <button class="bio-action" data-action="breed">Programa de Reprodução (Custo: 80)</button>
+              <button class="bio-action" data-action="research">Pesquisar Espécie (Custo: 30)</button>
+              <button class="bio-action" data-action="reserve">Criar Reserva Natural (Custo: 200)</button>
+            </div>
+            
+            <div class="biodiversity-stats">
+              <p>Espécies Protegidas: <span id="protected-species">0</span>/10</p>
+              <p>Orçamento: <span id="bio-budget">500</span> moedas</p>
+              <p>Equilíbrio Ecológico: 
+                <span id="eco-balance">50</span>%
+                <div class="progress-bar">
+                  <div class="progress-fill" id="eco-balance-bar"></div>
+                </div>
+              </p>
+              <p>Renda Mensal: <span id="monthly-income">0</span> moedas</p>
+            </div>
+            
+            <div id="bio-message">Escolha uma ação para proteger a biodiversidade!</div>
+          </div>
+        `;
+
+        const species = [
+          { name: "Onça-pintada", status: "Criticamente ameaçada", protected: false },
+          { name: "Mico-leão-dourado", status: "Ameaçada", protected: false },
+          { name: "Arara-azul", status: "Vulnerável", protected: false },
+          { name: "Tatu-bola", status: "Ameaçada", protected: false },
+          { name: "Lobo-guará", status: "Vulnerável", protected: false },
+          { name: "Tamanduá-bandeira", status: "Ameaçada", protected: false },
+          { name: "Preguiça-de-coleira", status: "Vulnerável", protected: false },
+          { name: "Peixe-boi", status: "Criticamente ameaçada", protected: false },
+          { name: "Jararaca-ilhoa", status: "Criticamente ameaçada", protected: false },
+          { name: "Sapo-folha", status: "Ameaçada", protected: false }
+        ];
+
+        let budget = 500;
+        let protectedCount = 0;
+        let ecoBalance = 50;
+        let monthlyIncome = 0;
+        let adoptionPrograms = 0;
+
+        function updateSpeciesList() {
+          const speciesList = document.getElementById('species-list');
+          speciesList.innerHTML = '<h4>Espécies Ameaçadas:</h4>';
+
+          species.forEach(specie => {
+            const statusColor = specie.status.includes("Crítica") ? "red" :
+                                specie.status.includes("Ameaçada") ? "orange" : "yellow";
+
+            speciesList.innerHTML += `
+              <div class="specie ${specie.protected ? 'protected' : ''}">
+                <strong>${specie.name}</strong>: 
+                <span style="color: ${statusColor}">${specie.status}</span>
+                ${specie.protected ? '✅' : ''}
+              </div>
+            `;
+          });
+        }
+
+        function updateStats() {
+          protectedCount = species.filter(s => s.protected).length;
+          ecoBalance = Math.min(100, 50 + (protectedCount * 5));
+
+          document.getElementById('protected-species').textContent = protectedCount;
+          document.getElementById('bio-budget').textContent = budget;
+          document.getElementById('eco-balance').textContent = ecoBalance;
+          document.getElementById('eco-balance-bar').style.width = `${ecoBalance}%`;
+          document.getElementById('monthly-income').textContent = monthlyIncome;
+
+          // Update progress bar color based on balance
+          const progressBar = document.getElementById('eco-balance-bar');
+          if (ecoBalance < 30) {
+            progressBar.style.backgroundColor = '#f44336';
+          } else if (ecoBalance < 60) {
+            progressBar.style.backgroundColor = '#ff9800';
+          } else {
+            progressBar.style.backgroundColor = '#4caf50';
+          }
+
+          const message = document.getElementById('bio-message');
+          if (protectedCount >= 8) {
+            message.textContent = "Excelente trabalho! Você protegeu a maioria das espécies!";
+            message.style.color = '#2e7d32';
+          } else if (protectedCount >= 5) {
+            message.textContent = "Bom progresso! Continue protegendo mais espécies.";
+            message.style.color = '#4caf50';
+          } else {
+            message.textContent = "Escolha uma ação para proteger a biodiversidade!";
+            message.style.color = '#333';
+          }
+        }
+
+        // Fundraising actions
+        document.querySelectorAll('.fundraising-option').forEach(button => {
+          button.addEventListener('click', function () {
+            const action = this.getAttribute('data-action');
+            let cost, minGain, maxGain, message;
+
+            switch (action) {
+              case 'lecture':
+                cost = 20;
+                minGain = 40;
+                maxGain = 60;
+                if (budget >= cost) {
+                  budget -= cost;
+                  const gain = Math.floor(Math.random() * (maxGain - minGain + 1)) + minGain;
+                  budget += gain;
+                  message = `Palestra realizada! Você arrecadou ${gain} moedas com doações.`;
+                } else {
+                  message = "Orçamento insuficiente para organizar a palestra!";
+                }
+                break;
+
+              case 'safari':
+                cost = 100;
+                minGain = 150;
+                maxGain = 250;
+                if (budget >= cost) {
+                  budget -= cost;
+                  const gain = Math.floor(Math.random() * (maxGain - minGain + 1)) + minGain;
+                  budget += gain;
+                  message = `Safari ecológico realizado! Turistas pagaram ${gain} moedas pela experiência.`;
+                } else {
+                  message = "Orçamento insuficiente para organizar o safari!";
+                }
+                break;
+
+              case 'adoption':
+                cost = 50;
+                if (budget >= cost) {
+                  budget -= cost;
+                  monthlyIncome += 80;
+                  adoptionPrograms++;
+                  message = `Programa de apadrinhamento criado! Agora você receberá 80 moedas por mês.`;
+                } else {
+                  message = "Orçamento insuficiente para criar o programa!";
+                }
+                break;
+
+              case 'ecotourism':
+                cost = 150;
+                minGain = 300;
+                maxGain = 500;
+                if (budget >= cost) {
+                  budget -= cost;
+                  const gain = Math.floor(Math.random() * (maxGain - minGain + 1)) + minGain;
+                  budget += gain;
+                  message = `Pacote de ecoturismo vendido! Você arrecadou ${gain} moedas.`;
+                } else {
+                  message = "Orçamento insuficiente para criar o pacote!";
+                }
+                break;
+
+              case 'donation':
+                cost = 30;
+                minGain = 50;
+                maxGain = 150;
+                if (budget >= cost) {
+                  budget -= cost;
+                  const gain = Math.floor(Math.random() * (maxGain - minGain + 1)) + minGain;
+                  budget += gain;
+                  message = `Campanha de doações realizada! Você arrecadou ${gain} moedas.`;
+                } else {
+                  message = "Orçamento insuficiente para a campanha!";
+                }
+                break;
+            }
+
+            document.getElementById('bio-message').textContent = message;
+            updateStats();
+          });
+        });
+
+        // Conservation actions
+        document.querySelectorAll('.bio-action').forEach(button => {
+          button.addEventListener('click', function () {
+            const action = this.getAttribute('data-action');
+            let cost, message;
+
+            switch (action) {
+              case 'protect':
+                cost = 50;
+                if (budget >= cost) {
+                  budget -= cost;
+                  const unprotected = species.filter(s => !s.protected);
+                  if (unprotected.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * unprotected.length);
+                    unprotected[randomIndex].protected = true;
+                    message = `Habitat protegido! ${unprotected[randomIndex].name} está mais seguro.`;
+                  } else {
+                    message = "Todas as espécies já estão protegidas!";
+                  }
+                } else {
+                  message = "Orçamento insuficiente para proteger habitat!";
+                }
+                break;
+
+              case 'breed':
+                cost = 80;
+                if (budget >= cost) {
+                  budget -= cost;
+                  const critical = species.filter(s => s.status.includes("Crítica") && !s.protected);
+                  if (critical.length > 0) {
+                    critical[0].protected = true;
+                    message = `Programa de reprodução bem-sucedido! ${critical[0].name} foi salvo da extinção.`;
+                  } else {
+                    message = "Nenhuma espécie crítica precisa de reprodução no momento.";
+                  }
+                } else {
+                  message = "Orçamento insuficiente para programa de reprodução!";
+                }
+                break;
+
+              case 'research':
+                cost = 30;
+                if (budget >= cost) {
+                  budget -= cost;
+                  budget += 20;
+                  const randomSpecie = species[Math.floor(Math.random() * species.length)];
+                  message = `Pesquisa revelou: ${randomSpecie.name} ${randomSpecie.protected ? 'está protegida' : 'ainda precisa de proteção'}.`;
+                } else {
+                  message = "Orçamento insuficiente para pesquisa!";
+                }
+                break;
+
+              case 'reserve':
+                cost = 200;
+                if (budget >= cost) {
+                  budget -= cost;
+                  // Protect 3 random species
+                  let protectedNow = 0;
+                  species.forEach(specie => {
+                    if (!specie.protected && protectedNow < 3 && Math.random() > 0.5) {
+                      specie.protected = true;
+                      protectedNow++;
+                    }
+                  });
+                  
+                  if (protectedNow > 0) {
+                    message = `Reserva natural criada! ${protectedNow} espécies foram protegidas.`;
+                  } else {
+                    message = "Reserva criada, mas todas as espécies já estavam protegidas.";
+                    budget += 50; // partial refund
+                  }
+                } else {
+                  message = "Orçamento insuficiente para criar reserva!";
+                }
+                break;a
+            }
+
+            document.getElementById('bio-message').textContent = message;
+            updateSpeciesList();
+            updateStats();
+          });
+        });
+
+        // Simulate monthly income
+        setInterval(function() {
+          if (monthlyIncome > 0) {
+            budget += monthlyIncome;
+            document.getElementById('bio-message').textContent = 
+              `Você recebeu ${monthlyIncome} moedas de programas de apadrinhamento (${adoptionPrograms} programas ativos).`;
+            updateStats();
+          }
+        }, 10000); // 10 seconds for demo purposes (would be longer in real game)
+
+        updateSpeciesList();
+        updateStats();
+      }
+    });
+  </script>
+</body>
+</html>

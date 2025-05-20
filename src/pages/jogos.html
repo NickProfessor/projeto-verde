@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Verde+ | RPG Educativo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/jogos.css">
+    <style>
+        .navbar {
+            background-color: #388e3c;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px 0;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="../../index.html" class="logo">PROJETO VERDE+</a>
+        </div>
+    </header>
+
+
+    <div class="main-content">
+        <div class="hero">
+            <h1>BioAmbiente RPG Educativo</h1>
+            <p>Um jogo digital que promove educação ambiental através de aventuras interativas para alunos do ensino fundamental II.</p>
+        </div>
+        
+        <div class="game-section">
+            <h2>Jogos Educativos</h2>
+            <p>Explore nossos jogos didáticos sobre meio ambiente e sustentabilidade:</p>
+            
+            <div class="game-grid">
+                <div class="game-card" onclick="location.href='jogos/ecossistema.html'">
+                    <div class="game-icon">🌳</div>
+                    <h3>Ecosistema RPG</h3>
+                    <p>Junte-se a uma aventura para restaurar o equilíbrio ecológico de uma floresta ameaçada.</p>
+                </div>
+                
+                <div class="game-card" onclick="location.href='jogos/reciclagem-quiz.html'">
+                    <div class="game-icon">♻️</div>
+                    <h3>Desafio da Reciclagem</h3>
+                    <p>Teste seus conhecimentos sobre coleta seletiva e gestão de resíduos.</p>
+                </div>
+                
+                <div class="game-card" onclick="location.href='jogos/agua-missao.html'">
+                    <div class="game-icon">💧</div>
+                    <h3>Missão Água</h3>
+                    <p>Aventure-se para resolver problemas de poluição e escassez de água.</p>
+                </div>
+                
+                <div class="game-card" onclick="location.href='jogos/energia-sustentavel.html'">
+                    <div class="game-icon">⚡</div>
+                    <h3>Energia Sustentável</h3>
+                    <p>Construa uma cidade usando apenas fontes renováveis de energia.</p>
+                </div>
+                
+                <div class="game-card" onclick="location.href='jogos/biodiversidade.html'">
+                    <div class="game-icon">🦋</div>
+                    <h3>Guardião da Biodiversidade</h3>
+                    <p>Proteja espécies ameaçadas e aprenda sobre cadeias alimentares.</p>
+                </div>
+                
+                <div class="game-card" onclick="location.href='jogos/mudancas-climaticas.html'">
+                    <div class="game-icon">🌍</div>
+                    <h3>Desafio Climático</h3>
+                    <p>Tome decisões que afetam o futuro do planeta e combata as mudanças climáticas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links mb-2">
+                <a href="#">TERMOS DE USO</a>
+            </div>
+            <div>TODOS OS DIREITOS RESERVADOS</div>
+            <div>© 2025 PROJETO VERDE+</div>
+        </div>
+    </footer>   
+</body>
+</html>

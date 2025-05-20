@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Energia Sustentável - Projeto Verde+</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    
+    header {
+      background-color: #2e7d32;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .login-btn {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .login-btn:hover {
+      background-color: #3e8e41;
+    }
+    
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .hero {
+      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1502082553048-f009c37129b9');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    
+    footer {
+      background-color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      border-top: 1px solid #e0e0e0;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    
+    .footer-links {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      margin: 0 10px;
+      color: #2e7d32;
+      text-decoration: none;
+    }
+    
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Game specific styles */
+    .energy-game {
+      background-color: #fffde7;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .city-map {
+      margin-top: 20px;
+      overflow-x: auto;
+    }
+    
+    .city-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      justify-content: center;
+      background-color: #dcedc8;
+      padding: 12px;
+      border-radius: 8px;
+      min-height: 280px;
+      max-width: 320px;
+      margin: 0 auto;
+      animation: riseUp 0.8s ease forwards;
+    }
+    
+    @keyframes riseUp {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    
+    .grid-cell {
+      width: 50px;
+      height: 50px;
+      background-color: #f1f8e9;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .grid-cell:hover {
+      background-color: #e8f5e9;
+    }
+    
+    .resource {
+      background-color: #a5d6a7;
+      border: 2px dashed transparent;
+      color: #1b5e20;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .resource:hover {
+      background-color: #81c784;
+      transform: scale(1.02);
+    }
+    
+    .energy-resources {
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    .resources-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .energy-stats {
+      margin-top: 20px;
+      font-weight: bold;
+      background-color: #e8f5e9;
+      padding: 15px;
+      border-radius: 8px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    
+    .energy-stats > div {
+      background-color: white;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .energy-stats p:first-child {
+      font-size: 0.8rem;
+      color: #666;
+      margin-bottom: 5px;
+    }
+    
+    .energy-stats p:last-child {
+      font-size: 1.2rem;
+      margin-top: 0;
+    }
+    
+    .energy-plant {
+      font-size: 24px;
+      transition: transform 0.3s ease;
+    }
+    
+    .energy-plant:hover {
+      transform: rotate(5deg) scale(1.1);
+    }
+    
+    #energy-message {
+      margin-top: 15px;
+      font-style: italic;
+      color: #333;
+      background-color: #fff3e0;
+      border-left: 4px solid #ffa000;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    
+    .selected-resource {
+      background-color: #388e3c !important;
+      color: white !important;
+      border-color: #1b5e20 !important;
+    }
+    
+    .restart-btn {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+    
+    .restart-btn:hover {
+      background-color: #b71c1c;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .energy-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .resources-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .resource {
+        width: 80%;
+        max-width: 300px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .city-grid {
+        min-height: 250px;
+        max-width: 280px;
+      }
+      
+      .grid-cell {
+        width: 45px;
+        height: 45px;
+      }
+      
+      .energy-plant {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    PROJETO VERDE+
+    <button class="login-btn">ENTRE NA CONTA</button>
+  </header>
+
+  <div class="main-content">
+    <div class="hero">
+      <h1>Energia Sustentável</h1>
+      <p>Construa uma cidade usando apenas fontes renováveis de energia.</p>
+    </div>
+
+    <div id="root"></div>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">TERMOS DE USO</a>
+      <a href="#">POLÍTICA DE PRIVACIDADE</a>
+      <a href="#">CONTATO</a>
+    </div>
+    <div>TODOS OS DIREITOS RESERVADOS</div>
+    <div>© 2025 PROJETO VERDE+</div>
+  </footer>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [budget, setBudget] = useState(1200);
+      const [energyProduced, setEnergyProduced] = useState(0);
+      const [energyNeeded, setEnergyNeeded] = useState(100);
+      const [selectedResource, setSelectedResource] = useState(null);
+      const [message, setMessage] = useState('Comece construindo estruturas de energia renovável!');
+      const [grid, setGrid] = useState(Array(25).fill(null));
+      const [dangerZones, setDangerZones] = useState([]);
+
+      const resourceCost = { solar: 100, wind: 150, hydro: 200 };
+      const energyProduction = { solar: 20, wind: 30, hydro: 50 };
+
+      useEffect(() => {
+        const generateDangerZones = () => {
+          const zones = [];
+          while (zones.length < 10) {
+            const randomIndex = Math.floor(Math.random() * 25);
+            if (!zones.includes(randomIndex)) {
+              zones.push(randomIndex);
+            }
+          }
+          setDangerZones(zones);
+        };
+        generateDangerZones();
+      }, []);
+
+      const restartGame = () => {
+        setBudget(1200);
+        setEnergyProduced(0);
+        setEnergyNeeded(100);
+        setSelectedResource(null);
+        setMessage('Comece construindo estruturas de energia renovável!');
+        setGrid(Array(25).fill(null));
+        const zones = [];
+        while (zones.length < 3) {
+          const randomIndex = Math.floor(Math.random() * 25);
+          if (!zones.includes(randomIndex)) {
+            zones.push(randomIndex);
+          }
+        }
+        setDangerZones(zones);
+      };
+
+      const handleCellClick = (index) => {
+        if (!selectedResource) return;
+
+        const cost = resourceCost[selectedResource];
+        const production = energyProduction[selectedResource];
+
+        if (grid[index]) {
+          setMessage("⚠️ Já há uma construção nessa área.");
+          return;
+        }
+
+        if (dangerZones.includes(index)) {
+          setMessage("🚧 Você construiu em um barranco e desabou. Você perdeu o dinheiro investido.");
+          setBudget(prev => prev - cost);
+          return;
+        }
+
+        if (budget >= cost) {
+          setBudget(prev => prev - cost);
+          setEnergyProduced(prev => prev + production);
+
+          const newGrid = [...grid];
+          newGrid[index] = selectedResource;
+          setGrid(newGrid);
+
+          if (Math.random() > 0.7) {
+            setEnergyNeeded(prev => prev + 10);
+            setMessage("📈 A demanda de energia aumentou! Continue construindo.");
+          } else {
+            setMessage("✅ Estrutura construída com sucesso!");
+          }
+        } else {
+          setMessage("❌ Orçamento insuficiente para esta construção!");
+        }
+      };
+
+      const getResourceEmoji = (type) => {
+        switch (type) {
+          case 'solar': return '☀️';
+          case 'wind': return '🌬️';
+          case 'hydro': return '💧';
+          default: return '';
+        }
+      };
+
+      return (
+        <div className="energy-game">
+          <div id="energy-message" className="message-box">
+            <p>{message}</p>
+          </div>
+
+          <div className="energy-resources">
+            <h3 className="font-bold text-lg mb-2">Recursos Disponíveis:</h3>
+            <div className="resources-container">
+              <button
+                onClick={() => setSelectedResource('solar')}
+                className={`resource ${selectedResource === 'solar' ? 'selected-resource' : ''}`}
+              >
+                Painel Solar ☀️ (Custo: 100)
+              </button>
+              <button
+                onClick={() => setSelectedResource('wind')}
+                className={`resource ${selectedResource === 'wind' ? 'selected-resource' : ''}`}
+              >
+                Turbina Eólica 🌬️ (Custo: 150)
+              </button>
+              <button
+                onClick={() => setSelectedResource('hydro')}
+                className={`resource ${selectedResource === 'hydro' ? 'selected-resource' : ''}`}
+              >
+                Hidrelétrica 💧 (Custo: 200)
+              </button>
+            </div>
+          </div>
+
+          <div className="city-map">
+            <h3 className="font-bold text-lg mb-3">Mapa da Cidade</h3>
+            <div className="city-grid">
+              {grid.map((cell, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleCellClick(index)}
+                  className={`grid-cell ${
+                    cell ? 'has-construction' : ''
+                  }`}
+                >
+                  {cell && <span className="energy-plant">{getResourceEmoji(cell)}</span>}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="energy-stats">
+            <div>
+              <p className="text-sm text-gray-600">Orçamento</p>
+              <p className="text-xl font-bold text-green-700">{budget} moedas</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Energia Produzida</p>
+              <p className="text-xl font-bold text-green-700">{energyProduced} MW</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Energia Necessária</p>
+              <p className="text-xl font-bold text-red-600">{energyNeeded} MW</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Energia Líquida</p>
+              <p className={`text-xl font-bold ${energyProduced - energyNeeded >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
+                {energyProduced - energyNeeded} MW
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <button
+              onClick={restartGame}
+              className="restart-btn"
+            >
+              🔁 Reiniciar Jogo
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
