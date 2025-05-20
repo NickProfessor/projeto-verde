@@ -34,7 +34,7 @@ foreach ($_SESSION['respostas'] as $indice => $valorResposta) {
     $pergunta = $_SESSION['todas_perguntas'][$indice];
     
     switch ($pergunta['id']) {
-        case 1: // Separação de lixo
+        case 1:
             $recomendacoes[] = match($valorResposta) {
                 0 => "✅ Excelente! Continue separando todo o lixo reciclável.",
                 1 => "👍 Bom trabalho! Tente separar o lixo todos os dias.",
@@ -43,7 +43,7 @@ foreach ($_SESSION['respostas'] as $indice => $valorResposta) {
             };
             break;
             
-        case 2: // Consumo consciente
+        case 2: 
             $recomendacoes[] = match($valorResposta) {
                 0 => "✅ Parabéns! Você é um consumidor consciente exemplar.",
                 1 => "👍 Boas escolhas! Continue pesquisando sobre os produtos.",
@@ -52,7 +52,7 @@ foreach ($_SESSION['respostas'] as $indice => $valorResposta) {
             };
             break;
             
-        case 3: // Descarte de eletrônicos
+        case 3:
             $recomendacoes[] = match($valorResposta) {
                 0 => "✅ Perfeito! Você descarta eletrônicos corretamente.",
                 1 => "👍 Bom trabalho! Continue levando para pontos de coleta.",
@@ -61,7 +61,7 @@ foreach ($_SESSION['respostas'] as $indice => $valorResposta) {
             };
             break;
             
-        case 4: // Reutilização
+        case 4:
             $recomendacoes[] = match($valorResposta) {
                 0 => "✅ Incrível! Você é expert em reutilizar materiais.",
                 1 => "👍 Boa! Tente reutilizar mais embalagens e recipientes.",
@@ -70,7 +70,7 @@ foreach ($_SESSION['respostas'] as $indice => $valorResposta) {
             };
             break;
             
-        case 5: // Tempo no banho
+        case 5:
             $recomendacoes[] = match($valorResposta) {
                 0 => "✅ Banho rápido! Você economiza muita água assim.",
                 1 => "👍 Bom tempo! Tente reduzir mais 1-2 minutos.",
@@ -79,7 +79,7 @@ foreach ($_SESSION['respostas'] as $indice => $valorResposta) {
             };
             break;
             
-        case 6: // Reaproveitamento de água
+        case 6:
             $recomendacoes[] = match($valorResposta) {
                 0 => "✅ Água reaproveitada! Seu jardim deve agradecer.",
                 1 => "👍 Boa iniciativa! Tente coletar mais água da chuva.",
@@ -88,7 +88,7 @@ foreach ($_SESSION['respostas'] as $indice => $valorResposta) {
             };
             break;
             
-        case 7: // Eletrodomésticos econômicos
+        case 7:
             $recomendacoes[] = match($valorResposta) {
                 0 => "✅ Todos selo A! Sua conta de energia agradece.",
                 1 => "👍 Boa parte é econômica. Troque os mais antigos quando possível.",
@@ -97,7 +97,7 @@ foreach ($_SESSION['respostas'] as $indice => $valorResposta) {
             };
             break;
             
-        case 8: // Desligar aparelhos
+        case 8:
             $recomendacoes[] = match($valorResposta) {
                 0 => "✅ Todos desligados! Nada de gasto fantasma.",
                 1 => "👍 Quase tudo desligado! Só falta um pequeno ajuste.",
@@ -106,7 +106,7 @@ foreach ($_SESSION['respostas'] as $indice => $valorResposta) {
             };
             break;
             
-        case 9: // Transporte
+        case 9:
             $recomendacoes[] = match($valorResposta) {
                 0 => "✅ Bicicleta ou caminhada! Saúde e planeta agradecem.",
                 1 => "👍 Transporte público é uma ótima escolha sustentável.",
@@ -115,7 +115,7 @@ foreach ($_SESSION['respostas'] as $indice => $valorResposta) {
             };
             break;
             
-        case 10: // Carona compartilhada
+        case 10:
             $recomendacoes[] = match($valorResposta) {
                 0 => "✅ Sempre compartilhando! Ótimo para o meio ambiente.",
                 1 => "👍 Bom uso de caronas! Continue assim.",
@@ -147,13 +147,11 @@ if (empty($recomendacoes)) {
     $recomendacoes[] = "🎉 Parabéns! Você é um exemplo de sustentabilidade em todas as áreas!";
 }
 
-// Calcular porcentagens para cada área
 $porcentagens = [];
 foreach ($medias as $area => $media) {
     $porcentagens[$area] = round((1 - ($media / 3)) * 100);
 }
 
-// Calcular porcentagem geral
 $porcentagemGeral = round((1 - ($totalPontos / 30)) * 100);
 $status = match(true) {
     $porcentagemGeral >= 80 => 'Excelente',
@@ -193,8 +191,7 @@ $status = match(true) {
             align-items: center;
             background-color: #a8d5a8;
         }
-        
-        /* Estilos para o dashboard */
+      
         .dashboard {
             background-color:rgb(255, 255, 255);
             width: 100%;

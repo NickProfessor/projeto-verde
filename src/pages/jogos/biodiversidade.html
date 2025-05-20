@@ -262,7 +262,6 @@
           document.getElementById('eco-balance-bar').style.width = `${ecoBalance}%`;
           document.getElementById('monthly-income').textContent = monthlyIncome;
 
-          // Update progress bar color based on balance
           const progressBar = document.getElementById('eco-balance-bar');
           if (ecoBalance < 30) {
             progressBar.style.backgroundColor = '#f44336';
@@ -285,7 +284,6 @@
           }
         }
 
-        // Fundraising actions
         document.querySelectorAll('.fundraising-option').forEach(button => {
           button.addEventListener('click', function () {
             const action = this.getAttribute('data-action');
@@ -366,7 +364,6 @@
           });
         });
 
-        // Conservation actions
         document.querySelectorAll('.bio-action').forEach(button => {
           button.addEventListener('click', function () {
             const action = this.getAttribute('data-action');
@@ -422,7 +419,7 @@
                 cost = 200;
                 if (budget >= cost) {
                   budget -= cost;
-                  // Protect 3 random species
+
                   let protectedNow = 0;
                   species.forEach(specie => {
                     if (!specie.protected && protectedNow < 3 && Math.random() > 0.5) {
@@ -435,7 +432,7 @@
                     message = `Reserva natural criada! ${protectedNow} espécies foram protegidas.`;
                   } else {
                     message = "Reserva criada, mas todas as espécies já estavam protegidas.";
-                    budget += 50; // partial refund
+                    budget += 50;
                   }
                 } else {
                   message = "Orçamento insuficiente para criar reserva!";
@@ -449,7 +446,6 @@
           });
         });
 
-        // Simulate monthly income
         setInterval(function() {
           if (monthlyIncome > 0) {
             budget += monthlyIncome;
@@ -457,7 +453,7 @@
               `Você recebeu ${monthlyIncome} moedas de programas de apadrinhamento (${adoptionPrograms} programas ativos).`;
             updateStats();
           }
-        }, 10000); // 10 seconds for demo purposes (would be longer in real game)
+        }, 10000);
 
         updateSpeciesList();
         updateStats();

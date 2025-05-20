@@ -1,4 +1,3 @@
-
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -20,7 +19,7 @@ header {
 
 .logo {
     display: inline-block;
-    background-color: #2E7D32; /* tom de verde semelhante ao da imagem */
+    background-color: #2E7D32;
     color: white;
     font-weight: bold;
     padding: 10px 20px;

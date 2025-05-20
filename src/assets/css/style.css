@@ -24,7 +24,7 @@ html {
 
         .logo {
             display: inline-block;
-            background-color: #2E7D32; /* tom de verde semelhante ao da imagem */
+            background-color: #2E7D32;
             color: white;
             font-weight: bold;
             padding: 10px 20px;
@@ -35,12 +35,12 @@ html {
 
         .jogo-btn {
             display: inline-block;
-            background-color: #eeeeee; /* cinza claro */
-            color: #2E7D32; /* verde escuro */
+            background-color: #eeeeee; 
+            color: #2E7D32; 
             font-weight: bold;
             padding: 6px 16px;
             border-radius: 6px;
-            text-decoration: none; /* remove a linha */
+            text-decoration: none;
             font-family: Arial, sans-serif;
             font-size: 20px;
         }

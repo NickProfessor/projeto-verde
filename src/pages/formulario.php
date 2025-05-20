@@ -2,7 +2,6 @@
 session_start();
 require_once __DIR__ . '/../../config/db_connect.php';
 
-// Inicializa a sessão do questionário
 if (!isset($_SESSION['formulario_iniciado'])) {
     $_SESSION['indice_pergunta'] = 0;
     $_SESSION['formulario_iniciado'] = true;
@@ -11,7 +10,6 @@ if (!isset($_SESSION['formulario_iniciado'])) {
 
 $indice = $_SESSION['indice_pergunta'] ?? 0;
 
-// Processa o POST do formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['voltar'])) {
         if ($indice > 0) {
@@ -22,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($resposta !== null) {
             $_SESSION['respostas'][$indice] = (int)$resposta;
 
-            // Verifica se é a última pergunta
             if ($indice + 1 >= count($_SESSION['todas_perguntas'] ?? [])) {
                 calcularResultados();
                 header('Location: resultados.php');
@@ -35,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// Função para calcular os resultados
 function calcularResultados() {
     $pontuacaoPorArea = [
         'descarte_de_residuos' => 0,
@@ -59,7 +55,6 @@ function calcularResultados() {
         $contadorPorArea[$area]++;
     }
 
-    // Calcula as médias
     $mediaPorArea = [];
     foreach ($pontuacaoPorArea as $area => $pontos) {
         $mediaPorArea[$area] = $contadorPorArea[$area] > 0 
@@ -73,7 +68,6 @@ function calcularResultados() {
     ];
 }
 
-// Busca todas as perguntas do banco
 if (!isset($_SESSION['todas_perguntas'])) {
     $perguntas = [];
     $sql = 'SELECT * FROM pergunta';
@@ -93,7 +87,6 @@ if (!isset($_SESSION['todas_perguntas'])) {
 $pergunta_atual = $_SESSION['todas_perguntas'][$indice];
 $id_pergunta = $pergunta_atual['id'];
 
-// Busca as respostas para a pergunta atual
 $respostas = [];
 $sql = "SELECT * FROM resposta WHERE id_pergunta = $id_pergunta";
 $result = $conn->query($sql);
@@ -106,7 +99,6 @@ if ($result && $result->num_rows > 0) {
 }
 $result->free();
 
-// Define o nome da área para exibição
 $nomesAreas = [
     'descarte_de_residuos' => 'Descarte de Resíduos',
     'consumo_consciente' => 'Consumo Consciente',

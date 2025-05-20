@@ -236,7 +236,6 @@
       <div id="climate-game-container" class="game-section"></div>
     </div>
 
-    <!-- Aba: Floresta -->
     <div id="floresta" class="tab-content">
       <div class="hero">
         <h1>Floresta Recuperada</h1>
@@ -248,7 +247,6 @@
       </div>
     </div>
 
-    <!-- Aba: Pontuação -->
     <div id="pontos" class="tab-content">
       <div class="hero">
         <h1>Ganhe Pontos</h1>
@@ -344,9 +342,9 @@
     }
 
    
-    let temperature = 0; // °C
-    let seaLevel = 0; // cm
-    let co2Level = 350; // ppm
+    let temperature = 0; //C°
+    let seaLevel = 0; //cm
+    let co2Level = 350; //ppm
     let year = 2025;
     let impact = 0;
 
@@ -466,7 +464,6 @@
       });
     }
 
-    // Atualiza indicadores visuais
     function updateIndicators() {
       const tempPercentage = ((temperature + 1) / 4) * 100;
       document.getElementById('temperature-bar').style.height = `${tempPercentage}%`;

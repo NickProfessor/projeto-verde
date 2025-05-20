@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Adiciona interação aos itens de ação
     const actionItems = document.querySelectorAll('.action-item');
     actionItems.forEach(item => {
         item.addEventListener('click', function(e) {
@@ -17,8 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
-    // Botão de compartilhar
+
     const shareBtn = document.getElementById('share-btn');
     if (shareBtn) {
         shareBtn.addEventListener('click', function() {
@@ -37,8 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
-    // Animações
+
     const animateElements = () => {
         const elements = document.querySelectorAll('.question-box, .recommendation-category, .action-plan');
         elements.forEach((el, index) => {
@@ -49,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
     
-    // Inicializa elementos com opacidade 0 para animação
     document.querySelectorAll('.question-box, .recommendation-category, .action-plan').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
