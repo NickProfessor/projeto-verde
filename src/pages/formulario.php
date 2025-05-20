@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . '/../../config/db_connect.php';
 
+
 if (!isset($_SESSION['formulario_iniciado'])) {
     $_SESSION['indice_pergunta'] = 0;
     $_SESSION['formulario_iniciado'] = true;
